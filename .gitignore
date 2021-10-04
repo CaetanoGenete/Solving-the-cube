@@ -25,5 +25,10 @@
 *.out
 *.app
 
+*.pdb
+
+#build data
+Solving the cube/build/**
+
 # Generated data
 Solving the cube/res/*.dat
