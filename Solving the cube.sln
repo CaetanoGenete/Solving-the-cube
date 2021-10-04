@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Solving the cube", "Solving the cube\Solving the cube.vcxproj", "{6746EDE6-533F-0C39-7C71-F1BD68C9EB44}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6746EDE6-533F-0C39-7C71-F1BD68C9EB44}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6746EDE6-533F-0C39-7C71-F1BD68C9EB44}.Debug|Win32.Build.0 = Debug|Win32
+		{6746EDE6-533F-0C39-7C71-F1BD68C9EB44}.Release|Win32.ActiveCfg = Release|Win32
+		{6746EDE6-533F-0C39-7C71-F1BD68C9EB44}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
