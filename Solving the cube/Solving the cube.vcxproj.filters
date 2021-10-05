@@ -124,5 +124,6 @@
     <ClCompile Include="Window\Window.cpp">
       <Filter>Window</Filter>
     </ClCompile>
+    <ClCompile Include="ProgressBar.h" />
   </ItemGroup>
 </Project>

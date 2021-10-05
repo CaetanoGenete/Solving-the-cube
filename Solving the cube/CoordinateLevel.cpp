@@ -5,6 +5,8 @@
 
 #include "Math.h"
 
+#include "ProgressBar.h"
+
 #include <assert.h>
 
 #define PRUNING_EMPTY 0xFF
@@ -239,13 +241,20 @@ inline void setRawFlipUDSlice(CubieLevel& cube, unsigned int coord) {
 
 void generateFlipUDSliceClassIndexToRepresentative() {
 	if (doesFileExist("res/flipUDClassIndexToRep.dat")) {
+		std::cout << "[INFO]: flipUDClassIndexToRep.dat has been found! reading...";
+
 		utils::String data = readFromFile("res/flipUDClassIndexToRep.dat");
 		unsigned int* data_stream = (unsigned int*)((unsigned char*)data.getData());
 
 		for (unsigned int coord = 0; coord < no_flip_ud_slice; coord++)
 			flip_ud_slice_class_index_to_representative[coord] = data_stream[coord];
 
+		std::cout << "DONE!" << "\n";
+
 	} else {
+		std::cout << "[INFO]: failed to read flipUDClassIndexToRep.dat! GENERATING..." << std::endl;
+		ProgressBar bar(20);
+
 		bool* occupied = new bool[no_raw_flip_ud_slice];
 
 		for (unsigned int i = 0; i < no_raw_flip_ud_slice; i++)
@@ -268,16 +277,22 @@ void generateFlipUDSliceClassIndexToRepresentative() {
 					occupied[getRawFlipUDSlice(inv)] = true;
 				}
 			}
+
+			bar.progress_to(((coord + 1) * 20) / no_raw_flip_ud_slice);
 		}
 
 		delete[] occupied;
+		std::cout << "DONE!" << "\n";
 
+		std::cout << "Dumping data to file... res/flipUDClassIndexToRep.dat \n\n";
 		dumpToFile("res/flipUDClassIndexToRep.dat", (char*)flip_ud_slice_class_index_to_representative, sizeof(flip_ud_slice_class_index_to_representative));
 	}
 }
 
 void generateFlipUDSliceMoveTable() {
 	if (doesFileExist("res/flipUDMoveTable.dat")) {
+		std::cout << "[INFO]: flipUDMoveTable.dat has been found! reading...";
+
 		utils::String data = readFromFile("res/flipUDMoveTable.dat");
 		unsigned int* data_stream = (unsigned int*)((unsigned char*)data.getData());
 
@@ -286,9 +301,12 @@ void generateFlipUDSliceMoveTable() {
 			for (unsigned int move = 0; move < NO_MOVES; move++, data_index++)
 				flip_ud_slice_move_table[coord][move] = data_stream[data_index];
 
-
+		std::cout << "DONE!" << "\n";
 	}
 	else {
+		std::cout << "[INFO]: failed to read flipUDMoveTable.dat! GENERATING..." << std::endl;
+		ProgressBar bar(20);
+
 		for (unsigned int class_index = 0; class_index < no_flip_ud_slice; class_index++) {
 			CubieLevel cube;
 
@@ -306,8 +324,13 @@ void generateFlipUDSliceMoveTable() {
 				}
 
 			}
+
+			bar.progress_to(((class_index + 1) * 20) / no_flip_ud_slice);
 		}
 
+		std::cout << "DONE!" << "\n";
+
+		std::cout << "Dumping data to file... res/flipUDMoveTable.dat \n\n";
 		dumpToFile("res/flipUDMoveTable.dat", (char*)flip_ud_slice_move_table, sizeof(flip_ud_slice_move_table));
 	}
 
@@ -315,13 +338,19 @@ void generateFlipUDSliceMoveTable() {
 
 void generateCornerPermClassIndexToRepresentative() {
 	if (doesFileExist("res/cornerPermClassIndexToRep.dat")) {
+		std::cout << "[INFO]: cornerPermClassIndexToRep.dat has been found! reading...";
+
 		utils::String data = readFromFile("res/cornerPermClassIndexToRep.dat");
 		unsigned int* data_stream = (unsigned int*)((unsigned char*)data.getData());
 
 		for (unsigned int coord = 0; coord < no_sym_corner_permutations; coord++)
 			corner_perm_class_index_to_representative[coord] = data_stream[coord];
 
+		std::cout << "DONE!" << "\n";
+
 	} else {
+		std::cout << "[INFO]: failed to read cornerPermClassIndexToRep.dat! GENERATING..." << std::endl;
+		ProgressBar bar(20);
 
 		bool* occupied = new bool[no_raw_corner_permutations];
 
@@ -345,16 +374,23 @@ void generateCornerPermClassIndexToRepresentative() {
 					occupied[getCornerPermCoord(inv)] = true;
 				}
 			}
+
+			bar.progress_to(((coord + 1) * 20) / no_raw_corner_permutations);
 		}
 
 		delete[] occupied;
 
+		std::cout << "DONE!" << "\n";
+
+		std::cout << "Dumping data to file... res/cornerPermClassIndexToRep.dat \n\n";
 		dumpToFile("res/cornerPermClassIndexToRep.dat", (char*)corner_perm_class_index_to_representative, sizeof(corner_perm_class_index_to_representative));
 	}
 }
 
 void generateCornerPermMoveTable() {
 	if (doesFileExist("res/cornerPermMoveTable.dat")) {
+		std::cout << "[INFO]: cornerPermMoveTable.dat has been found! reading...";
+
 		utils::String data = readFromFile("res/cornerPermMoveTable.dat");
 		unsigned int* data_stream = (unsigned int*)((unsigned char*)data.getData());
 
@@ -363,8 +399,12 @@ void generateCornerPermMoveTable() {
 			for (unsigned int move = 0; move < NO_MOVES; move++, data_index++)
 				corner_perm_move_table[coord][move] = data_stream[data_index];
 
+		std::cout << "DONE!" << "\n";
 
 	} else {
+		std::cout << "[INFO]: failed to read cornerPermMoveTable.dat! GENERATING..." << std::endl;
+		ProgressBar bar(20);
+
 		//For every class index
 		for (unsigned short class_index = 0; class_index < no_sym_corner_permutations; class_index++) {
 			CubieLevel cube;
@@ -386,14 +426,21 @@ void generateCornerPermMoveTable() {
 				}
 
 			}
+
+			bar.progress_to(((class_index + 1) * 20) / no_sym_corner_permutations);
 		}
 
+		std::cout << "DONE!" << "\n";
+
+		std::cout << "Dumping data to file... res/cornerPermMoveTable.dat \n\n";
 		dumpToFile("res/cornerPermMoveTable.dat", (char*)corner_perm_move_table, sizeof(corner_perm_move_table));
 	}
 
 }
 
 void generateCornerOriMoveTable() {
+	std::cout << "[INFO] GENERATING cornerOriMoveTable..." << std::endl;
+	ProgressBar bar(20);
 
 	//go through every corner orientation coordinate
 	for (unsigned short coord = 0; coord < no_corner_orientations; coord++) {
@@ -412,10 +459,17 @@ void generateCornerOriMoveTable() {
 			}
 
 		}
+
+		bar.progress_to(((coord + 1) * 20) / no_corner_orientations);
+
 	}
+
+	std::cout << "DONE!" << "\n\n";
 }
 
 void generateUDEdgePermMoveTable() {
+	std::cout << "[INFO] GENERATING UDEdgePermMoveTable..." << std::endl;
+	ProgressBar bar(20);
 
 	//go through every corner orientation coordinate
 	for (unsigned short coord = 0; coord < no_ud_edge_permutations; coord++) {
@@ -428,10 +482,18 @@ void generateUDEdgePermMoveTable() {
 
 			ud_edge_perm_move_table[coord][move] = getUDEdgePerm(cube);
 		}
+
+		bar.progress_to(((coord + 1) * 20) / no_ud_edge_permutations);
 	}
+
+	std::cout << "DONE!" << "\n\n";
 }
 
 void generateCornerOriConjugate() {
+	std::cout << "[INFO] GENERATING CornerOriConjugate..." << std::endl;
+	ProgressBar bar(20);
+
+
 	for (unsigned int coord = 0; coord < no_corner_orientations; coord++) {
 		CubieLevel cube;
 
@@ -443,11 +505,19 @@ void generateCornerOriConjugate() {
 			sym_cube.multiplyAllCoordinates(sym_move_cubes[inv_sym_index[symmetry]]);
 
 			corner_ori_conjugate[coord][symmetry] = getCornerOriCoord(sym_cube);
+
 		}
+
+		bar.progress_to(((coord + 1) * 20) / no_corner_orientations);
 	}
+
+	std::cout << "DONE!" << "\n\n";
 }
 
 void generateUDEdgePermConjugate() {
+	std::cout << "[INFO] GENERATING UDEdgePermConjugate..." << std::endl;
+	ProgressBar bar(20);
+
 	for (unsigned int coord = 0; coord < no_ud_edge_permutations; coord++) {
 		CubieLevel cube;
 
@@ -459,11 +529,17 @@ void generateUDEdgePermConjugate() {
 			sym_cube.multiplyAllCoordinates(sym_move_cubes[inv_sym_index[symmetry]]);
 
 			ud_edge_perm_conjugate[coord][symmetry] = getUDEdgePerm(sym_cube);
+
 		}
+
+		bar.progress_to(((coord + 1) * 20) / no_ud_edge_permutations);
 	}
+	std::cout << "DONE!" << "\n\n";
 }
 
 inline void generateEdgeSliceArrangedMoveTable(unsigned short* result, const Edge slice_pieces[NO_SLICE_EDGES], unsigned int no_coordinates) {
+	ProgressBar bar(20);
+
 	for (unsigned short coord = 0; coord < no_coordinates; coord++) {
 
 		CubieLevel cube;
@@ -477,26 +553,36 @@ inline void generateEdgeSliceArrangedMoveTable(unsigned short* result, const Edg
 
 				if (repeat < REPEATS_TO_IDENTITY - 1)
 					result[coord * NO_MOVES + (repeat * NO_UNIQUE_MOVES + move)] = getEdgeArranged(cube, slice_pieces, NO_SLICE_EDGES);
+
 			}
 
 		}
+
+		bar.progress_to(((coord + 1) * 20) / no_coordinates);
 	}
+	std::cout << "DONE!" << "\n\n";
 }
 
 void generateUDSliceArrangedMoveTable() {
+	std::cout << "[INFO] GENERATING UDSliceArrangedMoveTable..." << std::endl;
 	generateEdgeSliceArrangedMoveTable((unsigned short*)ud_slice_arranged_move_table, UD_slice_pieces, no_ud_slice_arranged);
 }
 
 void generateFBSliceArrangedMoveTable() {
+	std::cout << "[INFO] GENERATING FBSliceArrangedMoveTable..." << std::endl;
 	generateEdgeSliceArrangedMoveTable((unsigned short*)fb_slice_arranged_move_table, FB_slice_pieces, no_fb_slice_arranged);
 }
 
 void generateRLSliceArrangedMoveTable() {
+	std::cout << "[INFO] GENERATING RLSliceArrangedMoveTable..." << std::endl;
 	generateEdgeSliceArrangedMoveTable((unsigned short*)rl_slice_arranged_move_table, RL_slice_pieces, no_rl_slice_arranged);
+
 }
 
 void generateGetUDEdgePermTable() {
 	if (doesFileExist("res/getUDEdgePermTable.dat")) {
+		std::cout << "[INFO]: getUDEdgePermTable.dat has been found! reading...";
+
 		utils::String data = readFromFile("res/getUDEdgePermTable.dat");
 		unsigned int* data_stream = (unsigned int*)((unsigned char*)data.getData());
 
@@ -504,8 +590,12 @@ void generateGetUDEdgePermTable() {
 		for (unsigned int rl_slice_arranged = 0; rl_slice_arranged < no_rl_slice_arranged; rl_slice_arranged++)
 			for (unsigned char ud_slice_perm = 0; ud_slice_perm < no_ud_slice_permutations; ud_slice_perm++)
 				get_ud_edge_perm[rl_slice_arranged][ud_slice_perm] = data_stream[index++];
+
+		std::cout << "DONE!" << "\n";
 	}
 	else {
+		std::cout << "[INFO]: failed to read getUDEdgePermTable.dat! GENERATING..." << std::endl;
+		ProgressBar bar(20);
 
 		CubieLevel cube;
 
@@ -519,8 +609,13 @@ void generateGetUDEdgePermTable() {
 
 			//only the permutation of the fb_slice_coord is needed.
 			get_ud_edge_perm[rl_slice_coord][fb_slice_coord % no_ud_slice_permutations] = ud_edge_perm;
+
+			bar.progress_to(((ud_edge_perm + 1) * 20) / no_ud_edge_permutations);
 		}
 
+		std::cout << " DONE!" << std::endl;
+
+		std::cout << "Dumping data to file... res/getUDEdgePermTable.dat \n\n";
 		dumpToFile("res/getUDEdgePermTable.dat", (char*)get_ud_edge_perm, sizeof(get_ud_edge_perm));
 	}
 
@@ -539,13 +634,21 @@ void generateCornerOriFlipUDSlicePruningTable() {
 	unsigned int no_coordinates = no_flip_ud_slice * no_corner_orientations;
 
 	if (doesFileExist("res/CornerOriflipUDPruningTable.dat")) {
+		std::cout << "[INFO]: CornerOriflipUDPruningTable.dat has been found! reading...";
+
 		utils::String data = readFromFile("res/CornerOriflipUDPruningTable.dat");
 		unsigned char* data_stream = (unsigned char*)data.getData();
 
 		for (unsigned int coord = 0; coord < no_coordinates; coord++)
 			corner_ori_flip_ud_slice_prune_table[coord] = data_stream[coord];
 
+		std::cout << "DONE!" << "\n";
+
 	} else {
+
+		std::cout << "[INFO]: failed to read CornerOriflipUDPruningTable.dat! GENERATING..." << std::endl;
+		std::cout << "[INFO]: Step 1: GENERATING rawFlipUDSlice..." << std::endl;
+		ProgressBar bar(20);
 
 		for (unsigned int coord = 0; coord < no_coordinates; coord++)
 			corner_ori_flip_ud_slice_prune_table[coord] = PRUNING_EMPTY;
@@ -574,13 +677,24 @@ void generateCornerOriFlipUDSlicePruningTable() {
 					sym_state[i] = sym_state[i] | (1 << j);
 
 			}
+
+			bar.progress_to(((i + 1) * 20) / no_flip_ud_slice);
 		}
+
+		std::cout << "DONE! \n\n" << "[INFO]: Step 2: GENERATING CornerOriflipUDPruningTable..." << std::endl;
 
 		unsigned int previous_filled = 0;
 
+		ProgressBar bar2(20, "Total   ");
 		while (values_filled != no_coordinates) {
 
-			std::cout << "depth: " << (int)depth << ", size: " << (values_filled - previous_filled) << std::endl;
+			ProgressBar bar1(20, "Depth " + (depth < 10 ? std::string(" ") : std::string()) + std::to_string(depth));
+			bar2.set_progress_nodraw(0);
+
+			std::cout << "\n\n";
+
+			//ProgressBar bar2(20, "Table completeness");
+			//std::cout << "depth: " << (int)depth << ", size: " << (values_filled - previous_filled) << std::endl;
 			previous_filled = values_filled;
 
 			for (unsigned int coord = 0; coord < no_coordinates; coord++) {
@@ -611,14 +725,39 @@ void generateCornerOriFlipUDSlicePruningTable() {
 							}
 						}
 					}
+
+					unsigned int value1 = ((coord + 1) * 20) / no_coordinates;
+					unsigned int value2 = (values_filled * 20) / no_coordinates;
+
+					if (bar1.is_change(value1) || bar2.is_change(value2)) {
+						std::cout << "\033[A \033[A \r";
+
+						bar1.progress_to(value1, true, true);
+						std::cout << "\n \33[2K \n";
+						bar2.progress_to(value2, true, true);
+
+					}
 				}
+
+				//printf("\33[2K");
 			}
+			std::cout << "\033[A \033[A \r";
+
+			bar1.progress_to(20, true, true);
+			std::cout << "DONE!" << std::endl;
+
+			//std::cout << "\33[2K" << "DONE!" << std::endl;
 			depth++;
 		}
 
+		std::cout << std::endl;
+		bar2.progress_to(20, true, true);
+		std::cout << "DONE! \n";
+
 		delete[] sym_state;
 
-		dumpToFile("res/CornerOriflipUDPruningTable.dat", (char*)corner_ori_flip_ud_slice_prune_table, sizeof(corner_ori_flip_ud_slice_prune_table));
+		std::cout << "Dumping data to file... res/CornerOriflipUDPruningTable.dat \n\n";
+		dumpToFile("res/CornerOriflipUDPruningTable.dat", (char*)corner_ori_flip_ud_slice_prune_table, no_flip_ud_slice* no_corner_orientations);
 	}
 }
 
@@ -627,13 +766,22 @@ void generateUDEdgePermCornerPermPruningTable() {
 	unsigned int no_coordinates = no_ud_edge_permutations * no_sym_corner_permutations;
 
 	if (doesFileExist("res/UDEdgePermCornerPermPruningTable.dat")) {
+		std::cout << "[INFO]: UDEdgePermCornerPermPruningTable.dat has been found! reading...";
+
 		utils::String data = readFromFile("res/UDEdgePermCornerPermPruningTable.dat");
 		unsigned char* data_stream = (unsigned char*)data.getData();
 
 		for (unsigned int coord = 0; coord < no_coordinates; coord++)
 			ud_edge_perm_corner_perm_prune_table[coord] = data_stream[coord];
+
+		std::cout << "DONE!" << "\n";
+
 	}
 	else {
+
+		std::cout << "[INFO]: failed to read UDEdgePermCornerPermPruningTable.dat! GENERATING..." << std::endl;
+		std::cout << "[INFO]: Step 1: GENERATING rawCornerPerm..." << std::endl;
+		ProgressBar bar(20);
 
 		//Set all pruning values to empty 
 		for (unsigned int coord = 0; coord < no_coordinates; coord++)
@@ -666,14 +814,23 @@ void generateUDEdgePermCornerPermPruningTable() {
 					sym_state[i] = sym_state[i] | (1 << j);
 
 			}
+
+			bar.progress_to(((i + 1) * 20) / no_sym_corner_permutations);
 		}
 
+		std::cout << "DONE! \n\n" << "[INFO]: Step 2: GENERATING UDEdgePermCornerPermPruningTable..." << std::endl;
+
 		unsigned int previous_filled = 0;
-		
+
+		ProgressBar bar2(20, "Total   ");
 		//until table has been filled out, continue looping
 		while (values_filled != no_coordinates) {
 
-			std::cout << "depth: " << (int)depth << ", size: " << (values_filled - previous_filled) << std::endl;
+			ProgressBar bar1(20, "Depth " + (depth < 10 ? std::string(" ") : std::string()) + std::to_string(depth));
+			bar2.set_progress_nodraw(0);
+
+			std::cout << "\n\n";			
+			
 			previous_filled = values_filled;
 
 			for (unsigned int coord = 0; coord < no_coordinates; coord++) {
@@ -706,12 +863,34 @@ void generateUDEdgePermCornerPermPruningTable() {
 							}
 						}
 					}
+
+					unsigned int value1 = ((coord + 1) * 20) / no_coordinates;
+					unsigned int value2 = (values_filled * 20) / no_coordinates;
+
+					if (bar1.is_change(value1) || bar2.is_change(value2)) {
+						std::cout << "\033[A \033[A \r";
+
+						bar1.progress_to(value1, true, true);
+						std::cout << "\n \33[2K \n";
+						bar2.progress_to(value2, true, true);
+
+					}
 				}
 			}
+			std::cout << "\033[A \033[A \r";
+
+			bar1.progress_to(20, true, true);
+			std::cout << "DONE!" << std::endl;
+
 			depth++;
 		}
 
-		dumpToFile("res/UDEdgePermCornerPermPruningTable.dat", (char*)ud_edge_perm_corner_perm_prune_table, sizeof(ud_edge_perm_corner_perm_prune_table));
+		std::cout << std::endl;
+		bar2.progress_to(20, true, true);
+		std::cout << "DONE! \n";
+
+		std::cout << "Dumping data to file... res/UDEdgePermCornerPermPruningTable.dat" << "\n\n";
+		dumpToFile("res/UDEdgePermCornerPermPruningTable.dat", (char*)ud_edge_perm_corner_perm_prune_table, no_sym_corner_permutations * no_ud_edge_permutations);
 	}
 }
 

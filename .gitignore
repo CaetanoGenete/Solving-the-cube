@@ -27,6 +27,9 @@
 
 *.pdb
 
+#visual studio
+.vs
+
 #build data
 Solving the cube/build/**
 
