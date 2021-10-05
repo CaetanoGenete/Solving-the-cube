@@ -12,10 +12,12 @@ I made this for my A-Level computer science project from September 2018 to April
 <h2>Dependencies</h2>
 <ul>
   <li>OpenGL 4.0.0+</li> 
-  Rendering specification used for this project
+  Rendering specification used for this project.
   <li>GLEW (http://glew.sourceforge.net/)</li>
   C/C++ extension loading library of choice, used because it is the most popular and best documented.
   <li>GLFW (https://www.glfw.org/)</li>
   Light weight OpenGL API for rendering windows.
+  <li>ImGUI (https://github.com/ocornut/imgui)</li>
+  Easy to use and lightweight GUI perfect for this project, many thanks to the various contributors and developers.
 </ul>
 
