@@ -1,6 +1,6 @@
 # Solving the cube
 <h2>Description</h2>
-Solving the cube is a windowed application inspired by Kociemba's algorithm (https://www.jaapsch.net/puzzles/compcube.htm#kocal). The program uses OpenGL as the backbone to renderer a fully rotate-able rubik's cube, and the ability to turn its faces. This algorithm provides, not only a remarkly close approximation to the shortest solutions but also a method of scrambling that is more random than a naive move-set random generator.
+Solving the cube is a windowed application inspired by Kociemba's algorithm (https://www.jaapsch.net/puzzles/compcube.htm#kocal). The program uses OpenGL as the backbone to renderer a fully rotate-able rubik's cube, and the ability to turn its faces. This algorithm provides, not only a remarkably close approximation to the shortest solutions but also a method of scrambling that is more random than a naive move-set random generator.
 
 <h2>Instructions</h2>
 The algorithm will first generate a set of tables to improve performace, this make take a while (1-5 minutes). Once complete, the cube can be moved by dragging the area surrounding it. The infomation panel controls the turning of the faces; U: White, R: Red, F: Green, D: Yellow, L: Orange and B: Blue.
