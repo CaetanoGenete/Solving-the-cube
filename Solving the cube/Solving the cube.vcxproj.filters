@@ -78,6 +78,7 @@
     </ClInclude>
     <ClInclude Include="Math.h" />
     <ClInclude Include="Preferences.h" />
+    <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="Scrambler.h" />
     <ClInclude Include="Solver.h" />
     <ClInclude Include="Window\Window.h">
@@ -124,6 +125,5 @@
     <ClCompile Include="Window\Window.cpp">
       <Filter>Window</Filter>
     </ClCompile>
-    <ClCompile Include="ProgressBar.h" />
   </ItemGroup>
 </Project>

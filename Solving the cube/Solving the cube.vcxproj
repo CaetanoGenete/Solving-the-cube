@@ -119,6 +119,7 @@
     <ClInclude Include="ImGUI\stb_truetype.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Preferences.h" />
+    <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="Scrambler.h" />
     <ClInclude Include="Solver.h" />
     <ClInclude Include="Window\Window.h" />
@@ -140,7 +141,6 @@
     <ClCompile Include="ImGUI\imgui_draw.cpp" />
     <ClCompile Include="ImGUI\imgui_impl_glfw_gl3.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="ProgressBar.h" />
     <ClCompile Include="Scrambler.cpp" />
     <ClCompile Include="Solver.cpp" />
     <ClCompile Include="Window\Window.cpp" />
