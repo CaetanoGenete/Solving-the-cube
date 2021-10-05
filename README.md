@@ -7,7 +7,7 @@ The algorithm will first generate a set of tables to improve performace, this ma
 
 <h2>Developer Notes</h2>
 
-I made this for my A-Level computer science project from September 2018 to April 2019, over the years I have done almost nothing to it. This was the largest and most ambitious project I had undertaken at the time, where my knowledge of OpenGL was minute. I am proud of what I have achieved but be warned that it has only been tested on Windows, support for other platforms is not guaranteed. Moreover, for reasons I have failed to deduce. OpenGL refuses to render the program in Debug mode, perhaps due to some weird allocations. In I might ammend this, but for now, if you so wish to build and run the program, ensure that symbols are turned off.
+I made this for my A-Level computer science project from September 2018 to April 2019, over the years I have done almost nothing to it. This was the largest and most ambitious project I had undertaken at the time, where my knowledge of OpenGL was minute. I am proud of what I have achieved but be warned that it has only been tested on Windows, support for other platforms is not guaranteed. Moreover, for reasons I have failed to deduce. OpenGL refuses to render the program in Debug mode, perhaps due to some weird allocations. In the future, I might ammend this; for now, if you still wish to build and run the program, ensure that symbols are turned off.
 
 <h2>Dependencies</h2>
 <ul>
